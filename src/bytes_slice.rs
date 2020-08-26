@@ -31,6 +31,11 @@ impl<'a> SafeBytesSlice<'a> {
         self.len
     }
 
+    /// Returns true if the inner slice contains 0 bytes.
+    pub fn is_empty(&self) -> bool {
+        self.len() == 0
+    }
+
     /// Returns filled bytes (`&[u8]`) or error if capacity exceeded.
     pub fn try_into_bytes(self) -> Result<&'a [u8], CapacityExceeded> {
         if self.is_exceed() {
@@ -71,7 +76,7 @@ impl<'a> BufMut for SafeBytesSlice<'a> {
 
         // MaybeUninit is repr(transparent), so safe to transmute
         let part_slice = &mut self.slice[self.len..];
-        unsafe { mem::transmute(&mut *part_slice) }
+        unsafe { &mut *(&mut *part_slice as *mut [u8] as *mut [mem::MaybeUninit<u8>]) }
     }
 
     fn put_slice(&mut self, src: &[u8]) {
