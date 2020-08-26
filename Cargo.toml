@@ -1,0 +1,56 @@
+[package]
+name = "static-bytes"
+# TODO description = "..."
+version = "0.1.0"
+authors = ["Sylwester Rąpała <sylwesterrapala@outlook.com>"]
+edition = "2018"
+license = "MIT OR Apache-2.0"
+
+repository = "https://github.com/xoac/static-bytes"
+# # This points to a file under the package root (relative to this `Cargo.toml`).
+# The contents of this file are stored and indexed in the registry.
+# crates.io will render this file and place the result on the crate's page.
+readme = "README.md"
+
+# This is a list of up to five keywords that describe this crate. Keywords
+# are searchable on crates.io, and you may choose any words that would
+# help someone find this crate.
+# TODO keywords = ["...", "..."]
+
+# This is a list of up to five categories where this crate would fit.
+# Categories are a fixed list available at https://crates.io/category_slugs, and
+# they must match exactly.
+# TODO categories = ["...", "..."]
+
+
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+# Rust API Guidelines at https://rust-lang.github.io/api-guidelines/about.html
+
+[badges]
+# Codecov: `repository` is required. `branch` is optional; default is `master`
+# `service` is optional; valid values are `github` (default), `bitbucket`, and
+# `gitlab`.
+# codecov = { repository = "...", branch = "master", service = "github" }
+
+# Maintenance: `status` is required. Available options are:
+# - `actively-developed`: New features are being added and bugs are being fixed.
+# - `passively-maintained`: There are no plans for new features, but the maintainer intends to
+#   respond to issues that get filed.
+# - `as-is`: The crate is feature complete, the maintainer does not intend to continue working on
+#   it or providing support, but it works for the purposes it was designed for.
+# - `experimental`: The author wants to share it with the community but is not intending to meet
+#   anyone's particular use case.
+# - `looking-for-maintainer`: The current maintainer would like to transfer the crate to someone
+#   else.
+# - `deprecated`: The maintainer does not recommend using this crate (the description of the crate
+#   can describe why, there could be a better solution available or there could be problems with
+#   the crate that the author does not want to fix).
+# - `none`: Displays no badge on crates.io, since the maintainer has not chosen to specify
+#   their intentions, potential crate users will need to investigate on their own.
+ maintenance = { status = "actively-developed" }
+
+[dependencies]
+bytes = "0.5"
+
+
+# This Cargo.toml was generated from template: https://github.com/xoac/crates-io-lib-template
