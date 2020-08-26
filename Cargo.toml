@@ -50,7 +50,7 @@ readme = "README.md"
  maintenance = { status = "actively-developed" }
 
 [dependencies]
-bytes = "0.5"
+bytes = { version = "0.5", default-features=false }
 
 
 # This Cargo.toml was generated from template: https://github.com/xoac/crates-io-lib-template
