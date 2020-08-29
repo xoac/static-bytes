@@ -1,59 +1,46 @@
-# cargo-io-lib-template
+[![crates.io](https://img.shields.io/crates/v/static-bytes.svg)](https://crates.io/crates/static-bytes)
+[![Documentation](https://docs.rs/static-bytes/badge.svg)](https://docs.rs/static-bytes/)
+[![CI master](https://github.com/xoac/static-bytes/workflows/Continuous%20integration/badge.svg?branch=master)](https://github.com/xoac/static-bytes/actions?query=workflow%3A%22Continuous+integration%22)
+![Maintenance](https://img.shields.io/badge/maintenance-experimental-blue.svg)
 
-This is tweaked `cargo init --lib` for FOSS. It contains recommendations from [cargo book].
+# static-bytes
 
-## What this template provide?:
-- Follow [Rust API Guidelines]
-  * license MIT OR APACHE v2.0
-- Contains default `README.tpl` that help you generate README.md with [cargo-readme]
-- Contains `CHANGELOG.md` that follow [keepchangelog]
-- Quick start [CI workflow](https://github.com/actions-rs/meta/blob/master/recipes/quickstart.md) on stable rust:
-  * `cargo check`
-  * `cargo test`
-  * `cargo fmt`
-  * `cargo clippy -- -D warnings`
-
-## pre-requires:
-Installed:
-- [cargo-generate] `cargo install --git https://github.com/ashleygwilliams/cargo-generate` [(see issue #1)](https://github.com/xoac/crates-io-lib-template/issues/1)
-- [cargo-readme] `cargo install cargo-readme`
-
-## How to use:
-You need to do four simple steps:
-### 1. Use `cargo generate` to clone this template
+The aim of this crate is to improve user experience when working with static bytes.
+Look at this pseudo code example to understand problem with `&mut [u8]` and `bytes::buf::MutBuf`
+```compile_fail
+let mut fixed_storage = [u8;16];
+let mut slice = fixed_storage[..];
+let len_before = slice.len();
+// declaration fn encode(&self, buf: &mut dyn BufMut);
+frame.encode(&mut slice);
+let len = len_before - slice.len();
+let filled_bytes = fixed_storage[..len];
 ```
-cargo generate --git https://github.com/xoac/crates-io-lib-template.git --name my-project
-cd my-project
-```
-[Learn more about `cargo generate` here.][cargo-generate]
+There are two problems with code above:
+- it will panic if encode want to use more than 16 bytes!
+- it is boilerplate
 
-### 2. Update CHANGELOG.md and README.tpl Cargo.toml
-You need to replace `GITHUB_ORG_PATH` with your organization path. For example for this project the `GITHUB_ORG_PATH` would be `https://github.com/xoac/` (remember about last `/`).
+You can resolve both with `SafeBytesSlice`. For example usage see docs.
 
-You can do this with `sed` or with your IDE.
-```
-sed -i 's/GITHUB_ORG_PATH/https:\/\/github\.com\/xoac\//g' README.tpl CHANGELOG.md Cargo.toml
-```
+## License
 
-This is limitation because of this [issue](https://github.com/ashleygwilliams/cargo-generate/issues/17).
+Licensed under either of
 
-### 3. Update Cargo.toml
-Edit `Cargo.toml` there are some basic information you should provide (look for `TODO`).
+ * Apache License, Version 2.0
+   ([LICENSE-APACHE](LICENSE-APACHE) or http://www.apache.org/licenses/LICENSE-2.0)
+ * MIT license
+   ([LICENSE-MIT](LICENSE-MIT) or http://opensource.org/licenses/MIT)
 
-[Learn more about Cargo.toml here.](https://doc.rust-lang.org/cargo/reference/manifest.html)
+at your option.
 
-This is limitation because of this [issue](https://github.com/ashleygwilliams/cargo-generate/issues/17).
+## Contribution
 
-### 4. Replace this README.md
-Add documentation at top of `src/lib.rs` and generate `README.md` from that with:
-```
-cargo readme > README.md
-```
-[Lern more about `cargo readme` here.][cargo-readme]
+Unless you explicitly state otherwise, any contribution intentionally submitted
+for inclusion in the work by you, as defined in the Apache-2.0 license, shall be
+dual licensed as above, without any additional terms or conditions.
 
+This project try follow rules:
+* [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
+* [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-[Rust API Guidelines]:https://rust-lang.github.io/api-guidelines/about.html
-[cargo-readme]:https://github.com/livioribeiro/cargo-readme
-[cargo-generate]:https://github.com/ashleygwilliams/cargo-generate
-[keepchangelog]:https://keepachangelog.com
-[cargo book]:https://doc.rust-lang.org/cargo
+_This README was generated with [cargo-readme](https://github.com/livioribeiro/cargo-readme) from [template](https://github.com/xoac/crates-io-lib-template)_

@@ -1,6 +1,6 @@
 [package]
 name = "static-bytes"
-# TODO description = "..."
+description = "Bytes for embedded devices"
 version = "0.1.0"
 authors = ["Sylwester Rąpała <sylwesterrapala@outlook.com>"]
 edition = "2018"
@@ -15,12 +15,12 @@ readme = "README.md"
 # This is a list of up to five keywords that describe this crate. Keywords
 # are searchable on crates.io, and you may choose any words that would
 # help someone find this crate.
-# TODO keywords = ["...", "..."]
+keywords = ["buffers", "zero-copy", "slice"]
 
 # This is a list of up to five categories where this crate would fit.
 # Categories are a fixed list available at https://crates.io/category_slugs, and
 # they must match exactly.
-# TODO categories = ["...", "..."]
+categories = ["no-std", "embedded", "data-structures"]
 
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -47,7 +47,7 @@ readme = "README.md"
 #   the crate that the author does not want to fix).
 # - `none`: Displays no badge on crates.io, since the maintainer has not chosen to specify
 #   their intentions, potential crate users will need to investigate on their own.
- maintenance = { status = "actively-developed" }
+ maintenance = { status = "experimental" }
 
 [dependencies]
 bytes = { version = "0.5", default-features=false }
