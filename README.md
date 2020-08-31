@@ -6,9 +6,9 @@
 # static-bytes
 
 The aim of this crate is to improve user experience when working with static bytes.
-Look at this pseudo code example to understand problem with `&mut [u8]` and `bytes::buf::MutBuf`
+Look at this pseudo code example to understand problem with `&mut [u8]` and `bytes::buf::BufMut`
 ```compile_fail
-let mut fixed_storage = [u8;16];
+let mut fixed_storage = [u8; 16];
 let mut slice = fixed_storage[..];
 let len_before = slice.len();
 // declaration fn encode(&self, buf: &mut dyn BufMut);
