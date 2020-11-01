@@ -1,7 +1,7 @@
 [package]
 name = "static-bytes"
 description = "Bytes for embedded devices"
-version = "0.1.0"
+version = "0.2.0"
 authors = ["Sylwester Rąpała <sylwesterrapala@outlook.com>"]
 edition = "2018"
 license = "MIT OR Apache-2.0"
@@ -50,7 +50,7 @@ categories = ["no-std", "embedded", "data-structures"]
  maintenance = { status = "experimental" }
 
 [dependencies]
-bytes = { version = "0.5", default-features=false }
+bytes = { version = "^0.6", default-features=false }
 
 
 # This Cargo.toml was generated from template: https://github.com/xoac/crates-io-lib-template
