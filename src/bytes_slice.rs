@@ -174,7 +174,7 @@ unsafe impl<'a> BufMut for SafeBytesSlice<'a> {
         let bytes = &mut self.slice[self.bytes_written..];
         let len = bytes.len();
         let ptr = bytes.as_mut_ptr() as *mut _;
-        unsafe { return UninitSlice::from_raw_parts_mut(ptr, len) }
+        unsafe { UninitSlice::from_raw_parts_mut(ptr, len) }
     }
 
     fn put_slice(&mut self, src: &[u8]) {
