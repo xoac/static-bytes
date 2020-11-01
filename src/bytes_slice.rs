@@ -1,4 +1,5 @@
 use super::error::CapacityExceeded;
+use bytes::buf::UninitSlice;
 use bytes::BufMut;
 use core::mem;
 use core::mem::MaybeUninit;
@@ -153,7 +154,7 @@ impl<'a> SafeBytesSlice<'a> {
 }
 
 // Implement required methods
-impl<'a> BufMut for SafeBytesSlice<'a> {
+unsafe impl<'a> BufMut for SafeBytesSlice<'a> {
     fn remaining_mut(&self) -> usize {
         debug_assert!(self.bytes_written <= self.slice.len());
         self.slice.len() - self.bytes_written
@@ -169,22 +170,28 @@ impl<'a> BufMut for SafeBytesSlice<'a> {
         }
     }
 
-    fn bytes_mut(&mut self) -> &mut [mem::MaybeUninit<u8>] {
-        &mut self.slice[self.bytes_written..]
+    fn bytes_mut(&mut self) -> &mut UninitSlice {
+        let bytes = &mut self.slice[self.bytes_written..];
+        let len = bytes.len();
+        let ptr = bytes.as_mut_ptr() as *mut _;
+        unsafe { return UninitSlice::from_raw_parts_mut(ptr, len) }
     }
 
     fn put_slice(&mut self, src: &[u8]) {
         use core::ptr;
         // check if we have enough data to put slice. If no set flag instead of panic!
-        if self.remaining_mut() < src.len() {
+        let src_len = src.len();
+        if self.remaining_mut() < src_len {
+            self.bytes_written = self.slice.len(); // make `remaining_mut()` return 0
             self.cap_exceeded = true;
             return;
         }
 
+        // enough inner capacity to execute safe copy
         unsafe {
             let dst = self.bytes_mut();
-            ptr::copy_nonoverlapping(src[..].as_ptr(), dst.as_mut_ptr() as *mut u8, src.len());
-            self.advance_mut(src.len());
+            ptr::copy_nonoverlapping(src[..].as_ptr(), dst.as_mut_ptr() as *mut u8, src_len);
+            self.advance_mut(src_len);
         }
     }
 }
