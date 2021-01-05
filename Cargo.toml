@@ -50,7 +50,7 @@ categories = ["no-std", "embedded", "data-structures"]
  maintenance = { status = "experimental" }
 
 [dependencies]
-bytes = { version = "^0.6", default-features=false }
+bytes = { version = "^1.0", default-features=false }
 
 
 # This Cargo.toml was generated from template: https://github.com/xoac/crates-io-lib-template

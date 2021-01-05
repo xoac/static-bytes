@@ -170,7 +170,7 @@ unsafe impl<'a> BufMut for SafeBytesSlice<'a> {
         }
     }
 
-    fn bytes_mut(&mut self) -> &mut UninitSlice {
+    fn chunk_mut(&mut self) -> &mut UninitSlice {
         let bytes = &mut self.slice[self.bytes_written..];
         let len = bytes.len();
         let ptr = bytes.as_mut_ptr() as *mut _;
@@ -189,7 +189,7 @@ unsafe impl<'a> BufMut for SafeBytesSlice<'a> {
 
         // enough inner capacity to execute safe copy
         unsafe {
-            let dst = self.bytes_mut();
+            let dst = self.chunk_mut();
             ptr::copy_nonoverlapping(src[..].as_ptr(), dst.as_mut_ptr() as *mut u8, src_len);
             self.advance_mut(src_len);
         }
