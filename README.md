@@ -26,6 +26,7 @@ You can resolve both with `SafeBytesSlice`. For example usage see
 ### Compatibility with bytes
 - v0.1.x is compatible with bytes >=0.5.0, <0.6.0
 - v0.2.x is compatible with bytes >=0.6.0, <0.7.0
+- v0.3.x is compatible with bytes >=0.1.0, <2.0.0
 
 
 ## License
